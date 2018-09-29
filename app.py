@@ -62,7 +62,8 @@ def signup_page():
 @app.route('/ua')
 def home_user_page():
     if "user" in session:
-        return render_template("ua/home.html",user = session["user"])
+        req = db.child("requests").get().val()
+        return render_template("ua/home.html",user = session["user"],markers=req)
     else:
         return redirect("/login")
 

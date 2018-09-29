@@ -57,7 +57,7 @@
 
   #btn{
     /* display: none; */
-    margin: 10px;
+    /* margin: 10px; */
   }
 
 </style>
@@ -65,6 +65,7 @@
 {% endblock %}
 
 {% block main %}
+  {% include 'ua/nav.html' %}
 
     <div class="pac-card" id="pac-card">
       <input id="pac-input" type="text"
