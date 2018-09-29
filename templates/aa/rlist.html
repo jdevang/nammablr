@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="manifest" href="/static/manifest-user.json">
+
+{% endblock %}
+{% block main %}
+    {% include 'aa/nav.html' %}
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Location</th>
+          <th scope="col">User</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+
+      </tbody>
+    </table>
+
+    <div id="map"></div>
+
+{% endblock %}
+{% block script %}
+
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
+</script>
+
+<script>
+
+  function getAddr(vlat,vlng){
+    var geocoder = new google.maps.Geocoder;
+    latlng = { lat: vlat, lng: vlng}
+    geocoder.geocode({'location': latlng}, function(results, status) {
+       if (status === 'OK') {
+
+         if (results[0]) {
+           //lightbox
+           //results[0].formatted_address;
+         }
+     }
+    });
+  }
+</script>
+
+
+<script type="text/javascript">
+
+vstr="";
+{% for entry in req %}
+vlat = {{req[entry]["lat"]}};
+vlng = {{req[entry]["lng"]}};
+vstr += `<tr>
+  <th scope="row" id="{{entry}}">`+ vlat + ` - ` + vlng +`</th>
+  <td>{{req[entry]["user"]}}</td>
+</tr>`;
+
+// setTimeout(getAddr(vlat,vlng,"{{entry}}"), 2000);
+{% endfor %}
+$("#list").html(vstr);
+
+</script>
+
+{% endblock %}
