@@ -1,0 +1,21 @@
+{
+  "short_name": "Garbage Truck Admin",
+  "name": "Garbage Truck Admin",
+  "icons": [
+    {
+      "src": "/static/images/logo-admin.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/images/logo-admin.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "https://nammablr.herokuapp.com/aa",
+  "background_color": "#fff",
+  "display": "standalone",
+  "scope": "",
+  "theme_color": "#fff"
+}

@@ -1,42 +1,33 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
 <link rel="manifest" href="/static/manifest-user.json">
 
-
 {% endblock %}
-
 {% block main %}
-    {% include 'ua/nav.html' %}
+    {% include 'aa/nav.html' %}
 
-    <div class="container">
-      <br>
-      <div class="jumbotron">
-        <h1 class="display-6 text-center">Profile</h1>
-      </div>
-      <br><br>
-			<table class="table table-bordered text-center">
+    <table class="table table-bordered">
       <thead>
-				<tr>
-          <th scope="col">Email - {{user["email"]}}</th>
-        </tr>
         <tr>
-          <th scope="col">Your Locations</th>
+          <th scope="col">Location</th>
+          <th scope="col">User</th>
         </tr>
       </thead>
       <tbody id="list">
 
       </tbody>
     </table>
-      <br><br>
-      <a href="/logout" class="btn btn-block btn-dark">Logout</a>
 
-    </div>
+    <div id="map"></div>
 
 {% endblock %}
-
 {% block script %}
+
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
+</script>
+
 <script>
 
   function getAddr(vlat,vlng){
@@ -59,19 +50,17 @@
 
 vstr="";
 {% for entry in req %}
-	{% if req[entry]["user"] == user["email"] %}
-		vlat = {{req[entry]["lat"]}};
-		vlng = {{req[entry]["lng"]}};
-		vstr += `<tr>
-		  <th scope="row" id="{{entry}}">`+ vlat + - + vlng +`</th>
-		</tr>`;
+vlat = {{req[entry]["lat"]}};
+vlng = {{req[entry]["lng"]}};
+vstr += `<tr>
+  <th scope="row" id="{{entry}}">`+ vlat + ` - ` + vlng +`</th>
+  <td>{{req[entry]["user"]}}</td>
+</tr>`;
 
 // setTimeout(getAddr(vlat,vlng,"{{entry}}"), 2000);
-{% endif %}
 {% endfor %}
 $("#list").html(vstr);
 
 </script>
-<scriptsrc="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
-</script>
+
 {% endblock %}

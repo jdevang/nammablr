@@ -94,10 +94,15 @@ View map
 View requests
 View Graph
 '''
-@app.route("/aa/login")
-def admin_login_page():
-	return render_template("aa/login.html")
+@app.route('/aa')
+def home_admin_page():
+    req = db.child("requests").get().val()
+    return render_template("aa/main-view.html",markers=req)
 
+
+@app.route("/aa/rlist")
+def requests_admin_page():
+    return render_template("aa/rlist.html",req = db.child("requests").get().val())
 
 
 # Admin app ends

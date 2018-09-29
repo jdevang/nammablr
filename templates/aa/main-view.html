@@ -14,11 +14,11 @@
         padding: 0;
       }
     </style>
-    <link rel="manifest" href="/static/manifest-user.json">
+    <link rel="manifest" href="/static/manifest-admin.json">
 {% endblock %}
 
 {% block main %}
-  {% include 'ua/nav.html' %}
+  {% include 'aa/nav.html' %}
     <div id="map"></div>
 
 
@@ -58,9 +58,9 @@
       var locations = [
         {% for item in markers %}
 
-          {% if markers[item]["user"] == user["email"] %}
+
             { lat: {{markers[item]["lat"]}}, lng: {{markers[item]["lng"]}} },
-          {% endif %}
+
         {% endfor %}
 
       ]
