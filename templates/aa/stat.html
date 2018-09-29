@@ -7,25 +7,41 @@
 {% block main %}
     {% include 'aa/nav.html' %}
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Region</th>
-          <th scope="col">Requests</th>
-        </tr>
-      </thead>
-      <tbody id="list">
-
-      </tbody>
-    </table>
 
 
+<div id="map"></div>
 {% endblock %}
 
 
 {% block script %}
 
 <!-- Show Region wise distribution of requests here -->
+<script type="text/javascript">
 
 
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: {lat: 12.9715987,  lng: 77.59456269999998},
+  });
+
+  heatmap = new google.maps.visualization.HeatmapLayer({
+    data: getPoints(),
+    map: map
+  });
+}
+
+function getPoints() {
+        return [
+        {% for entry in req %}
+          new google.maps.LatLng({{req[entry]["lat"]}}, {{req[entry]["lng"]}}),
+        {% endfor %}
+        ];
+}
+
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization&callback=initMap">
+    </script>
 {% endblock %}
