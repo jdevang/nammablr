@@ -14,23 +14,20 @@
 
     <div class="container">
       <br>
-      <div class="jumbotron">
+      <div class="text-center jumbotron">
         <h1 class="display-6 text-center">Profile</h1>
+        <b>{{user["email"]}}</b>
       </div>
       <br><br>
-			<table class="table table-bordered text-center">
-      <thead>
-				<tr>
-          <th scope="col">Email - {{user["email"]}}</th>
-        </tr>
-        <tr>
-          <th scope="col">Your Locations</th>
-        </tr>
-      </thead>
-      <tbody id="list">
 
-      </tbody>
-    </table>
+      <div  class="row">
+        <div class="col col-xs-12" id="list">
+
+        </div>
+      </div>
+
+      <a href="/logout" class="btn btn-block "></a>
+
       <br><br>
 			<!-- Modal -->
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -39,14 +36,14 @@
 					<div class="modal-body" id="address">
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick='$("#address").html("");'>Close</button>
-						<button type="button" class="btn btn-dark btn-sm" data-dismiss="modal" onclick="remAddr()">Remove Address</button>
+					<button type="button" class="btn bg-dark btn-secondary btn-sm" data-dismiss="modal" onclick='$("#address").html("");'>Close</button>
+						<button type="button" class="btn btn-dark bg-dark btn-sm" data-dismiss="modal" onclick="remAddr()">Remove Address</button>
 					</div>
 				</div>
 			</div>
 			</div>
-      <a href="/logout" class="btn btn-block btn-dark">Logout</a>
-      <br><br><br><br><br><br><br><br><br><br>
+      <a href="/logout" class="btn btn-block btn-dark bg-dark">Logout</a>
+      <br><br><br><br><br><br><br>
     </div>
 
 {% endblock %}
@@ -94,15 +91,14 @@ vstr="";
 	{% if req[entry]["user"] == user["email"] %}
 		vlat = {{req[entry]["lat"]}};
 		vlng = {{req[entry]["lng"]}};
-		vstr += `<tr>
-		  <th scope="row" id="{{entry}}">`+ vlat + - + vlng +`
-				<!-- Button trigger modal -->
-				<br>
-					<button type="button" class="btn btn-dark btn-sm"  onclick="getAddr(`+vlat+`, `+vlng+`, '{{ entry }}')">
-					Address
-					</button>
-			</th>
-		</tr>`;
+		vstr += `<div class="card">
+      <div class="card-header text-center" id="{{entry}}">`+ vlat + ` - ` + vlng +`</div>
+      <div class="card-footer" style="background:#eee;">
+        <button type="button" class="btn-block" style="background:none; border:0;"  onclick="getAddr(`+vlat+`, `+vlng+`, '{{ entry }}')">
+          View Address
+        </button>
+      </div>
+    </div><br>`;
 
 // setTimeout(getAddr(vlat,vlng,"{{entry}}"), 2000);
 {% endif %}

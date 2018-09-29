@@ -70,7 +70,7 @@
     <div class="pac-card" id="pac-card">
       <input id="pac-input" type="text"
           placeholder="Enter a location">
-        <form method="post">
+        <form method="post" id="truckform">
           <input type="hidden" name="lat" id="lat" value="">
           <input type="hidden" name="lng" id="lng" value="">
           <button type="submit" id="btn" class="btn btn-block btn-secondary bg-dark">Request Truck Here</button>
@@ -225,9 +225,7 @@
         autocomplete.setFields(
             ['address_components', 'geometry', 'icon', 'name']);
 
-        var infowindow = new google.maps.InfoWindow();
-        var infowindowContent = document.getElementById('infowindow-content');
-        infowindow.setContent(infowindowContent);
+
         var marker = new google.maps.Marker({
           map: map,
           anchorPoint: new google.maps.Point(12.9715987, 77.59456269999998)
@@ -251,10 +249,13 @@
           });
 
           function placeMarker(location) {
-              var marker = new google.maps.Marker({
-                  position: location,
-                  map: map
-              });
+              // var marker = new google.maps.Marker({
+              //     position: location,
+              //     map: map
+              // });
+              marker.setPosition(location);
+              $("#lat").val(location.lat());
+              $("#lng").val(location.lng());
           }
 
 					// current loc ends
@@ -280,11 +281,9 @@
           // alert(place.geometry.location.lat());
           $("#lat").val(place.geometry.location.lat());
           $("#lng").val(place.geometry.location.lng());
-          $("#btn").css("display","block");
+
 
           marker.setVisible(true);
-
-
 
         });
 
@@ -292,5 +291,13 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI&libraries=places&callback=initMap"
         async defer></script>
+
+        <script>
+          $("#truckform").on("submit",function(e){
+            if ($("#lat").val().length == 0){
+              e.preventDefault();
+            }
+          })
+        </script>
 
 {% endblock %}
