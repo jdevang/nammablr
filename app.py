@@ -66,9 +66,17 @@ def home_user_page():
     else:
         return redirect("/login")
 
-@app.route("/request_truck")
+@app.route("/request_truck", methods=["GET","POST"])
 def request_truck_page():
-    return render_template("ua/request_truck_page.html")
+    if request.method=="GET":
+        return render_template("ua/request_truck_page.html")
+    else:
+        lat = request.form["lat"]
+        lng = request.form["lng"]
+        user_email = session["user"]["email"]
+        db.child("requests").push({"lat":lat,"lng":lng,"user":user_email})
+        # add to db
+        return redirect('/ua')
 
 # User app ends
 

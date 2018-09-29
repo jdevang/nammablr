@@ -69,7 +69,11 @@
     <div class="pac-card" id="pac-card">
       <input id="pac-input" type="text"
           placeholder="Enter a location">
-          <button type="button" id="btn" class="btn btn-block btn-secondary bg-dark">Request Truck Here</button>
+        <form method="post">
+          <input type="hidden" name="lat" id="lat" value="">
+          <input type="hidden" name="lng" id="lng" value="">
+          <button type="submit" id="btn" class="btn btn-block btn-secondary bg-dark">Request Truck Here</button>
+        </form>
     </div>
     <div id="map"></div>
 
@@ -118,7 +122,9 @@
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
+
 						map.setCenter(pos);
+						marker.setPosition(pos);
 					});}
 
 					// current loc ends
@@ -141,8 +147,11 @@
             map.setZoom(17);  // Why 17? Because it looks good.
           }
           marker.setPosition(place.geometry.location);
-          alert(place.geometry.location);
+          // alert(place.geometry.location.lat());
+          $("#lat").val(place.geometry.location.lat());
+          $("#lng").val(place.geometry.location.lng());
           $("#btn").css("display","block");
+
           marker.setVisible(true);
 
 
