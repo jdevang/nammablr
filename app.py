@@ -20,15 +20,6 @@ app.secret_key = 'nammablrsecretkey'
 def main_page():
     return render_template("goto_resp_apps.html")
 
-
-# User app
-'''
-Login Page
-Home Page
-Request Garbage Truck
-View My requests
-
-'''
 @app.route("/login", methods=["POST","GET"])
 def user_login_page():
     if request.method=="GET":
@@ -36,8 +27,11 @@ def user_login_page():
     else:
         username = request.form["username"]
         password = request.form["password"]
-        user = auth.sign_in_with_email_and_password(username, password)
-        print(user)
+        try:
+            user = auth.sign_in_with_email_and_password(username, password)
+        except:
+            return render_template("login.html",msg="Wrong Credentials Pal!")
+        # print(user)
         session["user"] = user
         return redirect("/ua")
 
@@ -84,16 +78,11 @@ def profile_page():
 	req = db.child("requests").get().val()
 	return render_template("ua/profile.html", user = session["user"], req=req)
 
-# User app ends
 
-# Admin app
-'''
-Login
-Home page
-View map
-View requests
-View Graph
-'''
+
+
+
+
 @app.route('/aa')
 def home_admin_page():
     req = db.child("requests").get().val()
@@ -114,6 +103,8 @@ def visual():
 	if request.method == "POST":
 		flash('hello', 'success')
 	return render_template("visual.html")
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

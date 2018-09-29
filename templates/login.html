@@ -8,6 +8,12 @@
     <h1 class="display-6 text-center">Login</h1>
   </div>
 
+  {% if msg %}
+  <div class="alert alert-danger" role="alert">
+    {{ msg }}
+  </div>
+  {% endif %}
+
   <form method="post">
     <div class="form-group">
     <label for="username">Email address</label>
