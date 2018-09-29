@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="manifest" href="/static/manifest-admin.json">
+
+{% endblock %}
+{% block main %}
+    {% include 'aa/nav.html' %}
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Region</th>
+          <th scope="col">Requests</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+
+      </tbody>
+    </table>
+
+
+{% endblock %}
+
+
+{% block script %}
+
+<!-- Show Region wise distribution of requests here -->
+
+
+{% endblock %}
