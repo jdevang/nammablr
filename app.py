@@ -1,22 +1,98 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, flash
 import pyrebase # For firebase connectivity
 
 config = {
-    "apiKey": "AIzaSyCOvJ2dzgqiA-Cq5LHP7wgrEj34WbMGE_Q",
-    "authDomain": "vcast-record-keeping.firebaseapp.com",
-    "databaseURL": "https://vcast-record-keeping.firebaseio.com",
-    "storageBucket": "vcast-record-keeping.appspot.com",
+    "apiKey": "AIzaSyCF8tAp52fwp1bYg0vc4Tgc_17NpTJLqzo",
+    "authDomain": "nammablrfb.firebaseapp.com",
+    "databaseURL": "https://nammablrfb.firebaseio.com",
+    "storageBucket": "nammablrfb.appspot.com",
 }
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
+auth = firebase.auth()
+
 
 app = Flask(__name__)
-app.secret_key = 'vcastsecretkey'
+app.secret_key = 'nammablrsecretkey'
 
 
 @app.route("/")
 def main_page():
     return render_template("goto_resp_apps.html")
+
+
+# User app
+'''
+Login Page
+Home Page
+Request Garbage Truck
+View My requests
+
+'''
+@app.route("/login", methods=["POST","GET"])
+def user_login_page():
+    if request.method=="GET":
+        return render_template("login.html")
+    else:
+        username = request.form["username"]
+        password = request.form["password"]
+        user = auth.sign_in_with_email_and_password(username, password)
+        print(user)
+        session["user"] = user
+        return redirect("/ua")
+
+@app.route('/logout')
+def user_logout():
+    session.clear()
+    return redirect("/login")
+
+
+@app.route("/signup", methods=["POST", "GET"])
+def signup_page():
+    if request.method=="GET":
+        return render_template("signup.html")
+    else:
+        username = request.form["username"]
+        if request.form["password"] != request.form["password2"]:
+            return render_template("signup.html",msg="Please Enter Same Passwords")
+        password = request.form["password"]
+        auth.create_user_with_email_and_password(username, password)
+        return redirect("/login")
+
+@app.route('/ua')
+def home_user_page():
+    if "user" in session:
+        return render_template("ua/home.html",user = session["user"])
+    else:
+        return redirect("/login")
+
+@app.route("/request_truck")
+def request_truck_page():
+    return render_template("ua/request_truck_page.html")
+
+# User app ends
+
+# Admin app
+'''
+Login
+Home page
+View map
+View requests
+View Graph
+'''
+@app.route("/aa/login")
+def admin_login_page():
+	return render_template("aa/login.html")
+
+
+
+# Admin app ends
+
+
+@app.route("/cluster")
+def cluster_test():
+    db.child("garbage_areas").val()
+    return render_template("cluster.html")
 
 
 if __name__ == '__main__':
