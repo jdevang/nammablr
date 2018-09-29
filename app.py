@@ -104,14 +104,10 @@ def home_admin_page():
 def requests_admin_page():
     return render_template("aa/rlist.html",req = db.child("requests").get().val())
 
-
+@app.route('/aa/stats')
+def stats():
+	return render_template("aa/stat.html")
 # Admin app ends
-
-
-@app.route("/cluster")
-def cluster_test():
-    db.child("garbage_areas").val()
-    return render_template("cluster.html")
 
 
 if __name__ == '__main__':
