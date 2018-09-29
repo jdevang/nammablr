@@ -1,0 +1,21 @@
+{
+  "short_name": "Namma Bengaluru",
+  "name": "Namma Bengaluru Truck Requester",
+  "icons": [
+    {
+      "src": "/static/images/logo-user.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/images/logo-user.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "https://nammablr.herokuapp.com/ua",
+  "background_color": "#fff",
+  "display": "standalone",
+  "scope": "",
+  "theme_color": "#fff"
+}

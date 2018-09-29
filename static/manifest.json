@@ -1,0 +1,21 @@
+{
+  "short_name": "VCAST Records",
+  "name": "VCAST Resource Monitor",
+  "icons": [
+    {
+      "src": "images/logo-vcast.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/logo-vcast.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "https://deshiklabs.github.io/vcast-app/index.html",
+  "background_color": "#3E3F3A",
+  "display": "standalone",
+  "scope": "/vcast-app/",
+  "theme_color": "#3E3F3A"
+}
