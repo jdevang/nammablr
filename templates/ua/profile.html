@@ -113,7 +113,12 @@ $("#list").html(vstr);
 <script type="text/javascript">
 	function remAddr() {
 		firebase.database().ref('requests/' + entryID).remove();
-		document.location.reload();
+    firebase.database().ref().once("value",function(){
+      document.location.reload();
+    });
+
+
+
 	}
 </script>
 {% endblock %}
