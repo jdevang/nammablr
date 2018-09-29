@@ -18,7 +18,19 @@
 
       </tbody>
     </table>
-
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body" id="address">
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick='$("#address").html("");'>Close</button>
+					<button type="button" class="btn btn-dark btn-sm" data-dismiss="modal" onclick="remAddr()">Resolve Address</button>
+				</div>
+			</div>
+		</div>
+		</div>
 
 {% endblock %}
 {% block script %}
@@ -26,18 +38,31 @@
 <script
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
 </script>
-
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script>
-
-  function getAddr(vlat,vlng){
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCF8tAp52fwp1bYg0vc4Tgc_17NpTJLqzo",
+    authDomain: "nammablrfb.firebaseapp.com",
+    databaseURL: "https://nammablrfb.firebaseio.com",
+    projectId: "nammablrfb",
+    storageBucket: "nammablrfb.appspot.com",
+    messagingSenderId: "578431913060"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+	var entryID = "";
+  function getAddr(vlat,vlng, entry){
     var geocoder = new google.maps.Geocoder;
     latlng = { lat: vlat, lng: vlng}
     geocoder.geocode({'location': latlng}, function(results, status) {
        if (status === 'OK') {
 
          if (results[0]) {
-           //lightbox
-           //results[0].formatted_address;
+					 $("#address").text(results[0].formatted_address );
+					 entryID = entry;
+					 $("#exampleModalCenter").modal();
          }
      }
     });
@@ -52,7 +77,13 @@ vstr="";
 vlat = {{req[entry]["lat"]}};
 vlng = {{req[entry]["lng"]}};
 vstr += `<tr>
-  <th scope="row" id="{{entry}}">`+ vlat + ` - ` + vlng +`</th>
+  <th scope="row" id="{{entry}}" class="text-center">`+ vlat + `<br>` + vlng +`
+	<!-- Button trigger modal -->
+	<br>
+		<button type="button" class="btn btn-dark btn-sm"  onclick="getAddr(`+vlat+`, `+vlng+`, '{{ entry }}')">
+		Address
+		</button>
+	</th>
   <td>{{req[entry]["user"]}}</td>
 </tr>`;
 
@@ -61,5 +92,12 @@ vstr += `<tr>
 $("#list").html(vstr);
 
 </script>
-
+<script type="text/javascript">
+	function remAddr() {
+		firebase.database().ref('requests/' + entryID).remove();
+    firebase.database().ref().once("value",function(){
+      document.location.reload();
+    });
+	}
+</script>
 {% endblock %}
