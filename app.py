@@ -106,9 +106,14 @@ def requests_admin_page():
 
 @app.route('/aa/stats')
 def stats():
-	return render_template("aa/stat.html")
+	req = db.child("requests").get().val()
+	return render_template("aa/stat.html", req=req)
 # Admin app ends
-
+@app.route('/aa/visual', methods=["GET","POST"])
+def visual():
+	if request.method == "POST":
+		flash('hello', 'success')
+	return render_template("visual.html")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
