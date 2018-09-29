@@ -7,5 +7,18 @@
 {% block main %}
     {% include 'ua/nav.html' %}
 
-    {{user["email"]}}
+    <div class="container">
+      <br>
+      <div class="jumbotron">
+        <h1 class="display-6 text-center">Profile</h1>
+      </div>
+      <br><br>
+
+      {{user["email"]}}
+
+      <br><br>
+      <a href="/logout" class="btn btn-block btn-dark">Logout</a>
+
+    </div>
+
 {% endblock %}

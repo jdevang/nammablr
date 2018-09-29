@@ -79,6 +79,10 @@ def request_truck_page():
         # add to db
         return redirect('/ua')
 
+@app.route("/ua/profile")
+def profile_page():
+    return render_template("ua/profile.html", user = session["user"])
+
 # User app ends
 
 # Admin app
