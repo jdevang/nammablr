@@ -63,7 +63,7 @@ def signup_page():
 def home_user_page():
     if "user" in session:
         req = db.child("requests").get().val()
-        return render_template("ua/home.html",user = session["user"],markers=req)
+        return render_template("ua/home.html",user = session["user"], markers=req)
     else:
         return redirect("/login")
 
@@ -81,7 +81,8 @@ def request_truck_page():
 
 @app.route("/ua/profile")
 def profile_page():
-    return render_template("ua/profile.html", user = session["user"])
+	req = db.child("requests").get().val()
+	return render_template("ua/profile.html", user = session["user"], req=req)
 
 # User app ends
 

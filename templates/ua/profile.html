@@ -13,12 +13,62 @@
         <h1 class="display-6 text-center">Profile</h1>
       </div>
       <br><br>
+			<table class="table table-bordered text-center">
+      <thead>
+				<tr>
+          <th scope="col">Email - {{user["email"]}}</th>
+        </tr>
+        <tr>
+          <th scope="col">Your Locations</th>
+        </tr>
+      </thead>
+      <tbody id="list">
 
-      {{user["email"]}}
-
+      </tbody>
+    </table>
       <br><br>
       <a href="/logout" class="btn btn-block btn-dark">Logout</a>
 
     </div>
 
+{% endblock %}
+
+{% block script %}
+<script>
+
+  function getAddr(vlat,vlng){
+    var geocoder = new google.maps.Geocoder;
+    latlng = { lat: vlat, lng: vlng}
+    geocoder.geocode({'location': latlng}, function(results, status) {
+       if (status === 'OK') {
+
+         if (results[0]) {
+           //lightbox
+           //results[0].formatted_address;
+         }
+     }
+    });
+  }
+</script>
+
+
+<script type="text/javascript">
+
+vstr="";
+{% for entry in req %}
+	{% if req[entry]["user"] == user["email"] %}
+		vlat = {{req[entry]["lat"]}};
+		vlng = {{req[entry]["lng"]}};
+		vstr += `<tr>
+		  <th scope="row" id="{{entry}}">`+ vlat + - + vlng +`</th>
+		</tr>`;
+
+// setTimeout(getAddr(vlat,vlng,"{{entry}}"), 2000);
+{% endif %}
+{% endfor %}
+$("#list").html(vstr);
+
+</script>
+<scriptsrc="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
+</script>
 {% endblock %}
