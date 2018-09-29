@@ -40,7 +40,7 @@
 					</div>
 					<div class="modal-footer">
 					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick='$("#address").html("");'>Close</button>
-						<button type="button" class="btn btn-dark btn-sm">Remove Address</button>
+						<button type="button" class="btn btn-dark btn-sm" data-dismiss="modal" onclick="remAddr()">Remove Address</button>
 					</div>
 				</div>
 			</div>
@@ -54,16 +54,31 @@
 {% block script %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
 </script>
-<script>
 
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCF8tAp52fwp1bYg0vc4Tgc_17NpTJLqzo",
+    authDomain: "nammablrfb.firebaseapp.com",
+    databaseURL: "https://nammablrfb.firebaseio.com",
+    projectId: "nammablrfb",
+    storageBucket: "nammablrfb.appspot.com",
+    messagingSenderId: "578431913060"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+	var entryID = "";
   function getAddr(vlat,vlng, entry){
-var geocoder = new google.maps.Geocoder;
+		var geocoder = new google.maps.Geocoder;
     latlng = { lat: vlat, lng: vlng}
     geocoder.geocode({'location': latlng}, function(results, status) {
        if (status === 'OK') {
 
          if (results[0]) {
           	$("#address").text(results[0].formatted_address );
+						entryID = entry;
             $("#exampleModalCenter").modal();
          }
      }
@@ -95,5 +110,10 @@ vstr="";
 $("#list").html(vstr);
 
 </script>
-
+<script type="text/javascript">
+	function remAddr() {
+		firebase.database().ref('requests/' + entryID).remove();
+		document.location.reload();
+	}
+</script>
 {% endblock %}
