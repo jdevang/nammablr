@@ -32,6 +32,19 @@
       </tbody>
     </table>
       <br><br>
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body" id="address">
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick='$("#address").html("");'>Close</button>
+						<button type="button" class="btn btn-dark btn-sm">Remove Address</button>
+					</div>
+				</div>
+			</div>
+			</div>
       <a href="/logout" class="btn btn-block btn-dark">Logout</a>
 
     </div>
@@ -39,17 +52,18 @@
 {% endblock %}
 
 {% block script %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
+</script>
 <script>
+var geocoder = new google.maps.Geocoder;
+  function getAddr(vlat,vlng, entry){
 
-  function getAddr(vlat,vlng){
-    var geocoder = new google.maps.Geocoder;
     latlng = { lat: vlat, lng: vlng}
     geocoder.geocode({'location': latlng}, function(results, status) {
        if (status === 'OK') {
 
          if (results[0]) {
-           //lightbox
-           //results[0].formatted_address;
+          	$("#address").text(results[0].formatted_address + entry);
          }
      }
     });
@@ -67,30 +81,10 @@ vstr="";
 		vstr += `<tr>
 		  <th scope="row" id="{{entry}}">`+ vlat + - + vlng +`
 				<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-					Launch demo modal
+				<br>
+					<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" onclick="getAddr(vlat, vlng, '{{ entry }}')" data-target="#exampleModalCenter">
+					Address
 					</button>
-
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								...
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div>
-						</div>
-					</div>
-					</div>
 			</th>
 		</tr>`;
 
@@ -100,6 +94,5 @@ vstr="";
 $("#list").html(vstr);
 
 </script>
-<scriptsrc="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
-</script>
+
 {% endblock %}
