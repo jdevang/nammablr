@@ -55,15 +55,16 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
 </script>
 <script>
-var geocoder = new google.maps.Geocoder;
-  function getAddr(vlat,vlng, entry){
 
+  function getAddr(vlat,vlng, entry){
+var geocoder = new google.maps.Geocoder;
     latlng = { lat: vlat, lng: vlng}
     geocoder.geocode({'location': latlng}, function(results, status) {
        if (status === 'OK') {
 
          if (results[0]) {
-          	$("#address").text(results[0].formatted_address + entry);
+          	$("#address").text(results[0].formatted_address );
+            $("#exampleModalCenter").modal();
          }
      }
     });
@@ -82,7 +83,7 @@ vstr="";
 		  <th scope="row" id="{{entry}}">`+ vlat + - + vlng +`
 				<!-- Button trigger modal -->
 				<br>
-					<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" onclick="getAddr(vlat, vlng, '{{ entry }}')" data-target="#exampleModalCenter">
+					<button type="button" class="btn btn-dark btn-sm"  onclick="getAddr(`+vlat+`, `+vlng+`, '{{ entry }}')">
 					Address
 					</button>
 			</th>
