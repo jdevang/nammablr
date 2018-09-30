@@ -19,7 +19,7 @@
     {% block main %}
         {% include 'aa/nav.html' %}
     <div id="map"></div>
-    <div class="" style="background:#fff; z-index:100; overflow:visible;; width:80%; height:90px; position:absolute; top:20px; ">
+    <div class="" style="background:#fff; z-index:100; overflow:visible;; width:70%; height:115px; position:absolute; top:20px; ">
       <canvas id="myChart" width="400" height="400"></canvas>
     </div>
 {% endblock %}
@@ -42,7 +42,7 @@
     var map;
     function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 11,
+      zoom: 10,
       center: {lat: 12.9715987,  lng: 77.59456269999998},
       disableDefaultUI: true
     });
