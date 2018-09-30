@@ -219,10 +219,11 @@
         autocomplete.setFields(
             ['address_components', 'geometry', 'icon', 'name']);
 
-
+        var image = '/static/images/trash.png';
         var marker = new google.maps.Marker({
           map: map,
-          anchorPoint: new google.maps.Point(12.9715987, 77.59456269999998)
+          anchorPoint: new google.maps.Point(12.9715987, 77.59456269999998),
+          icon: image
         });
 				// current loc
 				if (navigator.geolocation) {
