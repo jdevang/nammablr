@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+    #map {
+      height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
+    </script>
+    <script src="/static/zones/z1.js"> </script>
+    <script src="/static/zones/z2.js"> </script>
+    <script src="/static/zones/z3.js"> </script>
+    <script src="/static/zones/z4.js"> </script>
+    <script src="/static/zones/z5.js"> </script>
+    <script src="/static/zones/z6.js"> </script>
+    <script src="/static/zones/z7.js"> </script>
+    <script src="/static/zones/z8.js"> </script>
+    <script src="/static/zones/z9.js"> </script>
+    <script type="text/javascript">
+    function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 5,
+      center: {lat: 24.886, lng: -70.268},
+    });
+
+    var yelahanka = new google.maps.Polygon({
+        paths: yelahanka_zone,
+        strokeColor: '#1abc9c',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#1abc9c',
+        fillOpacity: 0.35
+    });
+    yelahanka.setMap(map);
+    var dasarahalli = new google.maps.Polygon({
+        paths: dasarahalli_zone,
+        strokeColor: '#3498db',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#3498db',
+        fillOpacity: 0.35
+    });
+    dasarahalli.setMap(map);
+    var gandhinagar = new google.maps.Polygon({
+        paths: gandhinagar_zone,
+        strokeColor: '#9b59b6',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#9b59b6',
+        fillOpacity: 0.35
+    });
+    gandhinagar.setMap(map);
+    var rajarajeshwarinagar = new google.maps.Polygon({
+        paths: rajarajeshwarinagar_zone,
+        strokeColor: '#34495e',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#34495e',
+        fillOpacity: 0.35
+    });
+    rajarajeshwarinagar.setMap(map);
+    var south = new google.maps.Polygon({
+        paths: south_zone,
+        strokeColor: '#f1c40f',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#f1c40f',
+        fillOpacity: 0.35
+    });
+    south.setMap(map);
+    var bommanahalli = new google.maps.Polygon({
+        paths: bommanahalli_zone,
+        strokeColor: '#e67e22',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#e67e22',
+        fillOpacity: 0.35
+    });
+    bommanahalli.setMap(map);
+    var mahadevpura = new google.maps.Polygon({
+        paths: mahadevpura_zone,
+        strokeColor: '#e74c3c',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#e74c3c',
+        fillOpacity: 0.35
+    });
+    mahadevpura.setMap(map);
+    var east = new google.maps.Polygon({
+        paths: east_zone,
+        strokeColor: '#2ecc71',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#2ecc71',
+        fillOpacity: 0.35
+    });
+    east.setMap(map);
+    var west = new google.maps.Polygon({
+        paths: west_zone,
+        strokeColor: '#95a5a6',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#95a5a6',
+        fillOpacity: 0.35
+    });
+    west.setMap(map);
+}
+      initMap();
+    </script>
+
+
+  </body>
+</html>

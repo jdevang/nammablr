@@ -98,11 +98,9 @@ def stats():
 	req = db.child("requests").get().val()
 	return render_template("aa/stat.html", req=req)
 # Admin app ends
-@app.route('/aa/visual', methods=["GET","POST"])
-def visual():
-	if request.method == "POST":
-		flash('hello', 'success')
-	return render_template("visual.html")
+@app.route('/zones')
+def zones():
+	return render_template("aa/zones.html")
 
 
 
