@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <style media="screen">
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="manifest" href="/static/manifest-admin.json">
+<style media="screen">
+
     #map {
       height: 100%;
     }
@@ -14,13 +14,21 @@
       padding: 0;
     }
     </style>
-  </head>
-  <body>
-    <div id="map"></div>
 
+    {% endblock %}
+    {% block main %}
+        {% include 'aa/nav.html' %}
+    <div id="map"></div>
+    <div class="" style="background:#fff; z-index:100; overflow:visible;; width:80%; height:90px; position:absolute; top:20px; ">
+      <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+{% endblock %}
+
+{% block script %}
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI&libraries=geometry">
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script src="/static/zones/z1.js"> </script>
     <script src="/static/zones/z2.js"> </script>
     <script src="/static/zones/z3.js"> </script>
@@ -31,11 +39,15 @@
     <script src="/static/zones/z8.js"> </script>
     <script src="/static/zones/z9.js"> </script>
     <script type="text/javascript">
+    var map;
     function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 5,
-      center: {lat: 24.886, lng: -70.268},
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 11,
+      center: {lat: 12.9715987,  lng: 77.59456269999998},
+      disableDefaultUI: true
     });
+  }
+  initMap();
 
     var yelahanka = new google.maps.Polygon({
         paths: yelahanka_zone,
@@ -118,10 +130,89 @@
         fillOpacity: 0.35
     });
     west.setMap(map);
-}
-      initMap();
+
+    var z1c=0,z2c=0,z3c=0,z4c=0,z5c=0,z6c=0,z7c=0,z8c=0,z9c=0;
+
+    var cur_latlng;
+
+    {% for item in markers %}
+
+          cur_latlng = new google.maps.LatLng({{markers[item]["lat"]}}, {{markers[item]["lng"]}} );
+
+
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: yelahanka_zone}))){
+      z1c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: dasarahalli_zone}))){
+      z2c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: gandhinagar_zone}))){
+      z3c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: rajarajeshwarinagar_zone}))){
+      z4c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: south_zone}))){
+      z5c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: bommanahalli_zone}))){
+      z6c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: mahadevpura_zone}))){
+      z7c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: east_zone}))){
+      z8c+=1;
+    }
+    if(google.maps.geometry.poly.containsLocation(cur_latlng,new google.maps.Polygon({paths: west_zone}))){
+      z9c+=1;
+    }
+  {% endfor %}
+
+  console.log(z1c,z2c,z3c,z4c,z5c,z6c,z7c,z8c,z9c);
+
+
+  var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+      labels: ["yelahanka" ,"dasarahalli" ,"gandhinagar" ,"rajarajeshwarinagar" ,"south" ,"bommanahalli" ,"mahadevpura" ,"east" ,"west"],
+      datasets: [{
+          label: '# of Requests per Zone',
+          data: [z1c,z2c,z3c,z4c,z5c,z6c,z7c,z8c,z9c],
+          backgroundColor: [
+            '#1abc9c',
+            '#3498db',
+            '#9b59b6',
+            '#34495e',
+            '#f1c40f',
+            '#e67e22',
+            '#e74c3c',
+            '#2ecc71',
+            '#95a5a6'
+          ],
+          borderColor: [
+            '#1abc9c',
+            '#3498db',
+            '#9b59b6',
+            '#34495e',
+            '#f1c40f',
+            '#e67e22',
+            '#e74c3c',
+            '#2ecc71',
+            '#95a5a6'
+          ],
+          borderWidth: 1
+      }]
+  },
+  options: {
+
+  }
+});
+
     </script>
 
 
-  </body>
-</html>
+
+
+{% endblock %}

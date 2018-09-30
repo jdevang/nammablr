@@ -100,7 +100,8 @@ def stats():
 # Admin app ends
 @app.route('/zones')
 def zones():
-	return render_template("aa/zones.html")
+    req = db.child("requests").get().val()
+    return render_template("aa/zones.html",markers=req)
 
 
 
