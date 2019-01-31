@@ -174,18 +174,20 @@
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
       }
       var locations = [
+        {% if markers %}
         {% for item in markers %}
 
           {% if markers[item]["user"] == user["email"] %}
             { lat: {{markers[item]["lat"]}}, lng: {{markers[item]["lng"]}} },
           {% endif %}
         {% endfor %}
+        {% endif %}
 
       ]
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRN1uDZIOggcNRFvf2URK_hfXnrpPiEgI&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9LzyU-nj-XdsV2iv0yTf7GVS3qHU_xls&callback=initMap">
     </script>
     {% endblock %}

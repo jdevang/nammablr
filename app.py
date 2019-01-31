@@ -1,11 +1,15 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 import pyrebase # For firebase connectivity
 
+# api key for gmap AIzaSyB9LzyU-nj-XdsV2iv0yTf7GVS3qHU_xls
+
 config = {
-    "apiKey": "AIzaSyCF8tAp52fwp1bYg0vc4Tgc_17NpTJLqzo",
-    "authDomain": "nammablrfb.firebaseapp.com",
-    "databaseURL": "https://nammablrfb.firebaseio.com",
-    "storageBucket": "nammablrfb.appspot.com",
+    "apiKey": "AIzaSyDz9ODjRuFQpnk9ueCL7Zh95l5TeYNbmw0",
+    "authDomain": "nammablr-29b72.firebaseapp.com",
+    "databaseURL": "https://nammablr-29b72.firebaseio.com",
+    "projectId": "nammablr-29b72",
+    "storageBucket": "nammablr-29b72.appspot.com",
+    "messagingSenderId": "778265823179"
 }
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
@@ -57,6 +61,7 @@ def signup_page():
 def home_user_page():
     if "user" in session:
         req = db.child("requests").get().val()
+        print(req)
         return render_template("ua/home.html",user = session["user"], markers=req)
     else:
         return redirect("/login")
